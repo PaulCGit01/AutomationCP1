@@ -1,0 +1,139 @@
+AND(
+  ISPICKVAL(Status, "Escalated"),
+  ISBLANK(Reason_for_Escalating__c)
+)
+convert to OR for picklists
+
+Rule
+Mark_as_Escalated
+ISPICKVAL(Status, "Closed") || ISPICKVAL(Priority,"Low") || ISPICKVAL(Priority,"Medium")
+)
+
+
+Helper function Lead_Quality_Helper
+
+** Help doc chaining example**
+(IF(ISBLANK(Problem_Num__c), 0, 1) + IF(ISBLANK(Severity_Num__c ), 0,1))
+
+
+INDUSTRY is a picklist(boolean), need number from picklist?
+IF(EMAIL,1,0,
+   IF(PHONE,1,0,
+     IF(COMPANY,1,0,
+        IF(TITLE,1,0,
+** VALUE to convert and set picklist **
+TEXT(INDUSTRY)
+IF (VALUE(INDUSTRY) > 0,1,0)
+
+
+** IF(EMAIL = "",0,1) is valid
+IF(EMAIL = "",0,
+   IF(PHONE = "",0,1)) is valid
+** Case okay on own**
+** CASE can use IF inside - help notes??
+CASE(1, IF(ISPICKVAL​ (Term__c, "12"),​ 1, 0),
+ 12 * Monthly_Commit__c,​​
+ IF(ISPICKVAL(Term__c, "24"), 1, 0),​​
+ 24 * Monthly_Commit__c, 0)
+
+** CASE with IF working ***
+CASE(Industry ,"",0,
+     IF(EMAIL = "",0,
+      IF(PHONE = "",0,1)))
+*** CASE with IF working ***
+
+CASE(Industry ,"",0,
+     IF(EMAIL = "",0,
+      IF(PHONE = "",0,
+       IF(COMPANY = "",0,
+        IF(TITLE = "",0,1)))))
+
+** ISBLANK_ test with picklist) template
+(IF(ISBLANK(Maint_Amount__c), 0, 1) + ​
+ IF(ISBLANK(Services_Amount__c), 0,1) + ​
+  IF(ISBLANK(Discount_Percent__c), 0, 1) + ​
+   IF(ISBLANK(Amount), 0, 1) +​
+    IF(ISBLANK(TEXT(Industry)), 0, 1))
+
+IF(ISBLANK(EMAIL), 0, 1) + ​
+ IF(ISBLANK(PHONE), 0,1) + ​
+  IF(ISBLANK(COMPANY), 0, 1) + ​
+   IF(ISBLANK(TITLE ), 0, 1) +​
+    IF(ISBLANK(TEXT(Industry)), 0, 1)
+
+
+**WORKS with number** ** Helper function setup to add values**
+IF(ISBLANK(EMAIL), 0, 1) + IF(ISBLANK(PHONE), 0,1) + IF(ISBLANK(COMPANY), 0, 1) + IF(ISBLANK(TEXT(Industry)), 0, 1) + IF(ISBLANK(TITLE ), 0, 1)
+
+
+
+CASE(Industry ,
+     "Apparel",1,
+"Biotechnology",1,
+     "Banking",1,
+		"Chemicals",1,
+		"Communications",1,
+		"Construction",1,
+		"Consulting",1,
+		"Education",1,
+		"Electronics",1,
+		"Energy",1,
+		"Engineering",1,
+		"Entertainment",1,
+		"Environmental",1,
+		"Finance",1,
+		"Food & Beverage",1,
+		"Government",1,
+		"Healthcare",1,
+		"Hospitality",1,
+		"Insurance",1,
+		"Machinery",1,
+		"Manufacturing",1,
+		"Media",1,
+		"Not For Profit",1,
+		"Recreation",1,
+		"Retail",1,
+		"Shipping",1,
+		"Technology",1,
+		"Telecommunications",1,
+		"Transportation",1,
+		"Utilities",1,0))
+       
+)
+)
+)
+)
+)
+
+Lead Quality
+IMAGE(
+  CASE(TEXT(Lead_Quality_Helper),
+     "0", "/img/samples/stars_000.gif","0 stars",
+     "1", "/img/samples/stars_100.gif","1 star",
+     "2", "/img/samples/stars_200.gif","2 stars",
+     "3", "/img/samples/stars_300.gif","3 stars",
+     "4", "/img/samples/stars_400.gif","4 stars",
+     "5", "/img/samples/stars_500.gif","5 stars"),
+     "Unknown")
+
+IMAGE(
+  CASE(TEXT(Lead_Quality_Helper),
+     "0", "/img/samples/stars_000.gif",
+     "1", "/img/samples/stars_100.gif",
+     "2", "/img/samples/stars_200.gif",
+     "3", "/img/samples/stars_300.gif",
+     "4", "/img/samples/stars_400.gif",
+     "5", "/img/samples/stars_500.gif",
+     "Unknown")
+
+
+
+
+** Works **
+IF (TEXT (Lead_Quality_Helper__c) = "0", IMAGE("/img/samples/stars_000.gif","0 stars"),"Unknown")
+
+
+
+
+ IF((NOT(IsClosed)) && (TODAY() - DATEVALUE(CreatedDate) > 10), "YELLOW",
+ "GREEN"))
