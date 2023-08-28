@@ -137,3 +137,6 @@ IF (TEXT (Lead_Quality_Helper__c) = "0", IMAGE("/img/samples/stars_000.gif","0 s
 
  IF((NOT(IsClosed)) && (TODAY() - DATEVALUE(CreatedDate) > 10), "YELLOW",
  "GREEN"))
+ 
+ 
+ ** this is a modified file**
